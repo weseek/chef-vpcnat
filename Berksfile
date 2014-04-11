@@ -1,4 +1,5 @@
 site :opscode
+metadata
 
 cookbook "cron", "= 1.3.6"
 

@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of hoge.
 
+## 1.0.1:
+
+* Bugfix of Berksfile
+
+
 ## 1.0.0:
 
 * Initial release of hoge
