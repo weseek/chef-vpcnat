@@ -8,3 +8,5 @@ version          '0.1.0'
 
 depends 'awscli'
 depends 'cron'
+depends 'databag-util'
+depends 'ec2util'
