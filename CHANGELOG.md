@@ -1,4 +1,4 @@
-# CHANGELOG for chef-vpcnat
+# CHANGELOG for vpcnat
 
 This file is used to list changes made in each version of hoge.
 

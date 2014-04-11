@@ -1,4 +1,4 @@
-chef-vpcnat Cookbook
+vpcnat Cookbook
 =============
 TODO: Enter the cookbook description here.
 

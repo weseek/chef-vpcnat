@@ -1,4 +1,4 @@
-name             'chef-vpcnat'
+name             'vpcnat'
 maintainer       'WESEEK, Inc.'
 maintainer_email 'yuki@weseek.co.jp'
 license          'All rights reserved'
