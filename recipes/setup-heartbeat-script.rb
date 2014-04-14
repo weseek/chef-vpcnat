@@ -16,7 +16,7 @@ instance_region = EC2Util.get_instance_region
 azsettings =  node["vpcnat"][:az][az]
 
 # getting Amazon SNS settings from data bag
-bag_item = get_data_bag_item_safely('sns', 'alert')
+bag_item = DatabagUtil.get_data_bag_item_safely('sns', 'alert')
 
 # create directories
 directory scripts[:install_dir] do
