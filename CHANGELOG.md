@@ -1,6 +1,17 @@
 # CHANGELOG for vpcnat
 
-This file is used to list changes made in each version of hoge.
+This file is used to list changes made in each version of vpcnat.
+
+## 1.2.0 (2014-04-21)
+
+* Update README
+* Apply Apache 2.0 License
+
+## 1.1.0:
+
+* Use opscode/sysctl cookbook and set ``net.ipv4.ip_forward``
+* Use opscode/iptables cookbook and configure IP Masquerading
+* Add default recipe
 
 ## 1.0.1:
 
@@ -9,9 +20,4 @@ This file is used to list changes made in each version of hoge.
 
 ## 1.0.0:
 
-* Initial release of hoge
-
-- - -
-Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
-
-The [Github Flavored Markdown page](http://github.github.com/github-flavored-markdown/) describes the differences between markdown on github and standard markdown.
+* Initial release
