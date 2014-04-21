@@ -1,1 +1,2 @@
--t nat -A POSTROUTING -s <%= @ipmasq_src %> -j MASQUERADE
+*nat
+-A POSTROUTING -s <%= @ipmasq_src %> -j MASQUERADE
