@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of vpcnat.
 
+## 1.2.3 (2014-04-23)
+
+* abolish ["vpcnat"]["scripts"]["aws_fullpath"]
+
 ## 1.2.2 (2014-04-23)
 
 * Support Amazon Linux (To be precise, the OS that do not been supported by cron_d.)
