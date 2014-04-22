@@ -69,7 +69,7 @@ vpcnat::setup-ip-masquerading
   <tr>
     <td><tt>["vpcnat"]["ipmasq_src"]</tt></td>
     <td>String</td>
-    <td>IP Masquerading Source which will be allowd by iptables</td>
+    <td>IP Masquerading Source which will be allowed by iptables</td>
     <td><tt>10.0.0.0/16</tt></td>
   </tr>
 </table>
