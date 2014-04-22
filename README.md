@@ -82,7 +82,7 @@ vpcnat::setup-heartbeat-script
 ### Attributes
 
 - '*subject instance*' means the instance that set up by this cookbook.
-- '*opposit instance*' means the NAT instance to monitor heartbeat by *subject instance*.
+- '*opposite instance*' means the NAT instance to monitor heartbeat by *subject instance*.
 - '*azname*' means name of availability zone like 'us-east-1a'.
   These attributes are applied only when *subject instance* is belongs to this AZ.
 
@@ -100,27 +100,27 @@ vpcnat::setup-heartbeat-script
     <td><tt>1</tt></td>
   </tr>
   <tr>
-    <td><tt>['vpcnat']['az'][<i>azname</i>]['opposit_primary_nat_id']</tt></td>
+    <td><tt>['vpcnat']['az'][<i>azname</i>]['opposite_primary_nat_id']</tt></td>
     <td>String</td>
-    <td>the ID of <i>opposit instance</i></td>
-    <td></td>
+    <td>the ID of <i>opposite instance</i></td>
+    <td>i-1234abcd</td>
   </tr>
   <tr>
-    <td><tt>['vpcnat']['az'][<i>azname</i>]['opposit_rtb']</tt></td>
+    <td><tt>['vpcnat']['az'][<i>azname</i>]['opposite_rtb']</tt></td>
     <td>String</td>
-    <td>the ID of the route table handled by <i>opposit instance</i></td>
-    <td></td>
+    <td>the ID of the route table handled by <i>opposite instance</i></td>
+    <td>rtb-1234abcd</td>
   </tr>
   <tr>
     <td><tt>['vpcnat']['az'][<i>azname</i>]['target_via_checking_nat']</tt></td>
     <td>String</td>
-    <td>target ip which is accessed for monitoring heartbeat.</td>
+    <td>target ip which is used for monitoring heartbeat.</td>
     <td><tt>8.8.8.8</tt></td>
   </tr>
   <tr>
     <td><tt>['vpcnat']['az'][<i>azname</i>]['target_via_inetgw']</tt></td>
     <td>String</td>
-    <td>target address which is accessed for testing the internet connection.</td>
+    <td>target address which is used for testing the internet connection.</td>
     <td><tt>google.co.jp</tt></td>
   </tr>
 </table>
