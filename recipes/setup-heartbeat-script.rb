@@ -60,6 +60,12 @@ end
 ### register to cron.d
 cron_d "nat_heartbeat" do
   user scripts[:user]
+  minute "*"
+  hour "*"
+  day "*"
+  month "*"
+  weekday "*"
+  
   # run every 30s
   command "(#{scripts[:install_dir]}/check.sh & sleep 30; #{scripts[:install_dir]}/check.sh) >/dev/null 2>&1"
 end
