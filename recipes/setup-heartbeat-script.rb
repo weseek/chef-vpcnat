@@ -45,7 +45,6 @@ template "#{scripts[:install_dir]}/check.sh" do
   mode '755'
   variables({
     :enabled => azsettings[:enabled],
-    :aws_fullpath => scripts[:aws_fullpath],
     :region => instance_region,
     :instance_id => instance_id,
     :opposite_rtb => azsettings[:opposite_rtb],
