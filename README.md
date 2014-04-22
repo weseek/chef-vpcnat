@@ -103,13 +103,13 @@ vpcnat::setup-heartbeat-script
     <td><tt>['vpcnat']['az'][<i>azname</i>]['opposite_primary_nat_id']</tt></td>
     <td>String</td>
     <td>the ID of <i>opposite instance</i></td>
-    <td>i-1234abcd</td>
+    <td><tt>i-1234abcd</tt></td>
   </tr>
   <tr>
     <td><tt>['vpcnat']['az'][<i>azname</i>]['opposite_rtb']</tt></td>
     <td>String</td>
     <td>the ID of the route table handled by <i>opposite instance</i></td>
-    <td>rtb-1234abcd</td>
+    <td><tt>rtb-1234abcd</tt></td>
   </tr>
   <tr>
     <td><tt>['vpcnat']['az'][<i>azname</i>]['target_via_checking_nat']</tt></td>
