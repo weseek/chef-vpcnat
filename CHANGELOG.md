@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of vpcnat.
 
+## 1.2.1 (2014-04-22)
+
+* Fix spells and examples
+
+
 ## 1.2.0 (2014-04-21)
 
 * Update README
