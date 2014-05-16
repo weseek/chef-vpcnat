@@ -144,7 +144,7 @@ Just include `vpcnat` in your node's `run_list`:
 Contributing
 ------------
 
-1. Fork the repository on Github
+1. Fork this repository on Github
 1. Write your change (and fix my poor English!)
 1. Submit a Pull Request using Github
 
