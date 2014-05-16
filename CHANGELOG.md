@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of vpcnat.
 
+## 1.2.5 (2014-05-16)
+
+* Add the parameter of jq/aws command location
+
 ## 1.2.4 (2014-04-30)
 
 * follow the version of chef-awscli cookbook
