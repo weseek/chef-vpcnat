@@ -9,6 +9,8 @@ if [ $ENABLED -eq 0 ]; then
 fi
 
 LOGGER="logger -s -t $0"
+JQ="<%= @jq %>"
+AWS="<%= @aws %>"
 
 SNS_ARN="<%= @sns_arn %>"
 SNS_REGION="<%= @sns_region %>"
@@ -31,33 +33,35 @@ sns_publish() {
   $LOGGER "publish SNS to $SNS_ARN"
   
   TARGET_RTB=$1
-  TARGET_RTB_JSON=`aws ec2 describe-route-tables --region $REGION --route-table-ids $TARGET_RTB | jq -r '.RouteTables[]'`
-  TARGET_RTB_NAME=`echo $TARGET_RTB_JSON | jq -r '.Tags[] | select(.Key == "Name") | .Value'`
+  TARGET_RTB_JSON=`$AWS ec2 describe-route-tables \
+    --region $REGION --route-table-ids $TARGET_RTB | $JQ -r '.RouteTables[]'`
+  TARGET_RTB_NAME=`echo $TARGET_RTB_JSON | $JQ -r '.Tags[] | select(.Key == "Name") | .Value'`
   CURRENT_NAT_INSTANCE=$2
-  CURRENT_NAT_INSTANCE_NAME=`aws ec2 describe-instances --region $REGION --instance-ids $CURRENT_NAT_INSTANCE \
-    | jq -r '.Reservations[0].Instances[0].Tags[] | select(.Key == "Name") | .Value'`
+  CURRENT_NAT_INSTANCE_NAME=`$AWS ec2 describe-instances --region $REGION --instance-ids $CURRENT_NAT_INSTANCE \
+    | $JQ -r '.Reservations[0].Instances[0].Tags[] | select(.Key == "Name") | .Value'`
   
-  ASSOC_SUBNET_IDS=`echo $TARGET_RTB_JSON | jq -r '.Associations[] | select(.SubnetId) | .SubnetId'`
+  ASSOC_SUBNET_IDS=`echo $TARGET_RTB_JSON | $JQ -r '.Associations[] | select(.SubnetId) | .SubnetId'`
   ALL_SUBNET_IDS=`echo $ASSOC_SUBNET_IDS | sed -e 's/ /\//g'`
-  SUBNETS_JSON=`aws ec2 describe-subnets --region $REGION --subnet-ids $ASSOC_SUBNET_IDS | jq -r '.Subnets[]'`
+  SUBNETS_JSON=`$AWS ec2 describe-subnets --region $REGION --subnet-ids $ASSOC_SUBNET_IDS | $JQ -r '.Subnets[]'`
   
   IFS=$'\n'
   MESSAGES=()
   MESSAGES+=("Default gateway of below subnet(s) are switched.")
   for subnetid in $ASSOC_SUBNET_IDS; do
-    subnet_json=`echo $SUBNETS_JSON | jq -r "select(.SubnetId == \"$subnetid\")"`
-    subnet=`echo $subnet_json | jq -r '.CidrBlock'`
-    subnet_name=`echo $subnet_json | jq -r '.Tags[] | select(.Key == "Name") | .Value'`
+    subnet_json=`echo $SUBNETS_JSON | $JQ -r "select(.SubnetId == \"$subnetid\")"`
+    subnet=`echo $subnet_json | $JQ -r '.CidrBlock'`
+    subnet_name=`echo $subnet_json | $JQ -r '.Tags[] | select(.Key == "Name") | .Value'`
     MESSAGES+=("- $subnetid ($subnet, $subnet_name)")
   done
   
   MESSAGES+=("The current NAT instance is $CURRENT_NAT_INSTANCE($CURRENT_NAT_INSTANCE_NAME)")
   MESSAGES+=("")
   MESSAGES+=("Routing table of $TARGET_RTB ($TARGET_RTB_NAME)")
-  ROUTING_TABLE=`aws ec2 describe-route-tables --region $REGION --route-table-ids $TARGET_RTB --query 'RouteTables[0].Routes' --output table`
+  ROUTING_TABLE=`$AWS ec2 describe-route-tables \
+    --region $REGION --route-table-ids $TARGET_RTB --query 'RouteTables[0].Routes' --output table`
   MESSAGES+=(`echo "$ROUTING_TABLE"`)
   
-  aws sns --region $SNS_REGION publish \
+  $AWS sns --region $SNS_REGION publish \
     --topic-arn $SNS_ARN \
     --message "${MESSAGES[*]}" \
     --subject "NAT instance has switched: $TARGET_RTB($ALL_SUBNET_IDS)"
@@ -77,8 +81,8 @@ fi
 
 # check current route
 CUR_NAT_INSTANCE=`\
-  aws ec2 --region $REGION describe-route-tables --route-table-ids $OPPOSIT_RTB \
-    | jq -r '.RouteTables[0].Routes[] | select(.DestinationCidrBlock == "0.0.0.0/0") | .InstanceId'`
+  $AWS ec2 --region $REGION describe-route-tables --route-table-ids $OPPOSIT_RTB \
+    | $JQ -r '.RouteTables[0].Routes[] | select(.DestinationCidrBlock == "0.0.0.0/0") | .InstanceId'`
 
 $LOGGER "current NAT instance of $OPPOSIT_RTB is $CUR_NAT_INSTANCE"
 
@@ -92,7 +96,8 @@ if ping -w 2s $TARGET_VIA_CHECKING_NAT > /dev/null; then
   # if CURRENT nat instance is secondary, switch to primary
   if [ "$CUR_NAT_INSTANCE" = "$NAT_SECONDARY" ]; then
     $LOGGER "reverting route to primary(opposite) NAT instance."
-    CMD="aws ec2 --region $REGION replace-route --route-table-id $OPPOSIT_RTB --destination-cidr-block 0.0.0.0/0 --instance-id $NAT_PRIMARY"
+    CMD="$AWS ec2 --region $REGION replace-route \
+      --route-table-id $OPPOSIT_RTB --destination-cidr-block 0.0.0.0/0 --instance-id $NAT_PRIMARY"
     $LOGGER "$CMD"
     $CMD
     
@@ -107,7 +112,8 @@ else
   # if CURRENT nat instance is primary, switch to secondary
   if [ "$CUR_NAT_INSTANCE" = "$NAT_PRIMARY" ]; then
     $LOGGER "switching route to secondary(this) NAT instance."
-    CMD="aws ec2 --region $REGION replace-route --route-table-id $OPPOSIT_RTB --destination-cidr-block 0.0.0.0/0 --instance-id $NAT_SECONDARY"
+    CMD="$AWS ec2 --region $REGION replace-route \
+      --route-table-id $OPPOSIT_RTB --destination-cidr-block 0.0.0.0/0 --instance-id $NAT_SECONDARY"
     $LOGGER "$CMD"
     $CMD
     

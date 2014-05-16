@@ -52,7 +52,9 @@ template "#{scripts[:install_dir]}/check.sh" do
     :target_via_inetgw => azsettings[:target_via_inetgw],
     :target_via_checking_nat => azsettings[:target_via_checking_nat],
     :sns_arn => bag_item['dest_arn'],
-    :sns_region => bag_item['region']
+    :sns_region => bag_item['region'],
+    :jq => scripts[:jq],
+    :aws => scripts[:aws]
   })
 end
 
