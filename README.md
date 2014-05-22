@@ -55,7 +55,8 @@ vpcnat::setup-ip-masquerading
 
 - set '1' to ``net.ipv4.ip_forward`` using sysctl
 - configure iptables and enable IP Masquerading
-
+    - If you use this recipe on Ubuntu/Debian distribution, **DO NOT** install iptables-persistent package.  
+/etc/init.d/iptables-persistent will overwrite the iptables rules created by this recipe.
 
 ### Attributes
 
