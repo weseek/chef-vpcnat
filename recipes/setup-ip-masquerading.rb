@@ -35,7 +35,7 @@ include_recipe 'iptables'
 iptables_rule "masquerade" do
   source "iptables/masquerade.erb"
   variables({
-    :ipmasq_src => node["vpcnat"][:ipmasq_src]
+    :ipmasq_src => node["vpcnat"]["ipmasq_src"]
   })
 end
 
