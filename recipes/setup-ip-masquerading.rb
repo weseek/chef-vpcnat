@@ -40,4 +40,5 @@ iptables_rule "masquerade" do
     :ipmasq_src => node["vpcnat"]["ipmasq_src"]
   )
   action :enable
+  notifies :run, resources(:execute => 'rebuild-iptables')
 end
