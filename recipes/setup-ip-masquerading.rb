@@ -39,4 +39,5 @@ iptables_rule "masquerade" do
   variables(
     :ipmasq_src => node["vpcnat"]["ipmasq_src"]
   )
+  action :enable
 end
