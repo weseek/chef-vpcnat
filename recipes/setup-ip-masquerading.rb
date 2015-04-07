@@ -32,10 +32,13 @@ end
 # setting iptables
 include_recipe 'iptables'
 
+Chef::Log.info("masquerade source ip: #{node["vpcnat"]["ipmasq_src"]}")
+
 iptables_rule "masquerade" do
   source "iptables/masquerade.erb"
-  variables({
-    :ipmasq_src => node["vpcnat"][:ipmasq_src]
-  })
+  variables(
+    :ipmasq_src => node["vpcnat"]["ipmasq_src"]
+  )
+  action :enable
+  notifies :run, resources(:execute => 'rebuild-iptables')
 end
-
