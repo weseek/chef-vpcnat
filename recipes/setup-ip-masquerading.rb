@@ -28,6 +28,8 @@ sysctl_param 'net.ipv4.ip_forward' do
   value 1
 end
 
+# setting sysctl
+include_recipe 'sysctl::apply'
 
 # setting iptables
 include_recipe 'iptables'

@@ -1,7 +1,7 @@
 site :opscode
 metadata
 
-cookbook "sysctl", "= 0.4.0"
+cookbook "sysctl", "= 0.7.0"
 cookbook "cron", "= 1.3.6"
 cookbook "iptables"
 
