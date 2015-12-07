@@ -9,7 +9,7 @@ version          '1.2.5'
 depends 'sysctl', '= 0.7.0'
 depends 'cron', '= 1.3.6'
 depends 'awscli'
-depends 'iptables'
+depends 'iptables', '= 1.1.0'
 
 depends 'databag-util'
 depends 'ec2util'
